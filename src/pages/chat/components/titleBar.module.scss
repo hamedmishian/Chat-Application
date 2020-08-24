@@ -1,0 +1,22 @@
+@import '../../../constants.scss';
+.title-bar {
+  height: 59px;
+  background-color: $title-bar-color;
+  width: 100%;
+  display: flex;
+
+  $title-bar-width: 70px;
+
+  >.first, >.last {
+    width: $title-bar-width;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+  }
+
+  >.middle {
+    flex: 1;
+  }
+
+}

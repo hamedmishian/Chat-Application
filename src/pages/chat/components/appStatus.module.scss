@@ -1,0 +1,28 @@
+@import '../../../constants.scss';
+
+.pointer {
+  cursor: pointer;
+}
+
+.search-text {
+  width: 100%;
+  border-radius: 2px;
+  height: 80%;
+  border: none;
+  background-color: $title-bar-color;
+  outline: none;
+  font-size: 1.25rem;
+  &:focus{
+    border: none;
+    outline: none;
+  }
+}
+
+.app-title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  font-size: 1.5rem;
+  font-weight: bold;
+}

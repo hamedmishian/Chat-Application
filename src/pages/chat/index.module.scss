@@ -1,0 +1,14 @@
+@import '../../constants.scss';
+
+.layout {
+  display: grid;
+  grid-template-columns: 35% 1fr;
+  grid-template-rows: calc(100vh - (#{$top-margin} * 2));
+  border: solid 1px #ccc;
+
+  overflow-y: hidden;
+}
+
+.side {
+  border-right: solid 2px #ccc;
+}

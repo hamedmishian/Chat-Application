@@ -1,0 +1,17 @@
+@import './constants.scss';
+.app {
+  .head {
+    width: 100%;
+    height: 127px;
+    position: fixed;
+    z-index: -1;
+    background-color: #009588;
+  }
+
+  >.main {
+    padding-top: $top-margin;
+    max-width: 1366px;
+    margin: 0 auto;
+  }
+  
+}
