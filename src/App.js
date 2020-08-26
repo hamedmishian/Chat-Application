@@ -5,7 +5,7 @@ import styles from './app.module.scss';
 function App() {
 
   return (
-    <div className={styles['app']}>
+    // <div className={styles['app']}>
       <div className={styles['head']} />
       <div className={styles['main']}>
         <Chat />
