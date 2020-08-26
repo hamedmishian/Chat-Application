@@ -44,14 +44,26 @@ export default function ChatDetail(
   return (
     <>
       <TitleBar
-        first={<FontAwesomeIcon onClick={onClose} icon={faTimes} size='lg' color='#009588' className='pointer' />}
+        first={<FontAwesomeIcon 
+          onClick={onClose} 
+          icon={faTimes} 
+          size='lg' 
+          color='#009588' 
+          className='pointer' 
+          />}
+
         middle={
           <div className={styles['app-title']}>
             <Avatar name={name} url={avatar} />
             <div className={styles['name']}>{name}</div>
           </div>
         }
-        last={<FontAwesomeIcon icon={faEllipsisV} size='lg' color='#009588' className='pointer' />}
+        last={<FontAwesomeIcon 
+          icon={faEllipsisV} 
+          size='lg' 
+          color='#009588' 
+          className='pointer' 
+          />}
       />
       <div className={styles['chat-box']}>
         <ul className={styles['messages-panel']}>

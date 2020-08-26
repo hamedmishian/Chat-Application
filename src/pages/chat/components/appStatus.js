@@ -9,7 +9,19 @@ function useLegacyState(initState) {
   return [state, newState => setState({ ...state, ...newState })]
 }
 
-export default function AppStatus() {
+function useKeyborad(eventName, callback, dependencies){
+useEffect(
+    () => {
+      window.addEventListener(eventName, callback);
+      return () => {
+        window.removeEventListener(eventName, callback);
+      }
+    },
+    dependencies
+  );
+}
+
+export default function AppStatus({ onInputChange }) {
   const [mode, setMode] = useState('list');
   const input = useRef(null);
 
@@ -21,6 +33,9 @@ export default function AppStatus() {
     setMode('list');
   }
 
+  function handleChange(e){
+    onInputChange(e.target.value)
+  }
   useEffect(
     () => {
       if (mode === 'search') {
@@ -29,25 +44,39 @@ export default function AppStatus() {
     },
     [mode]
   );
+    
+  useKeyborad('keydown', handleKeyDown, [mode]);
 
+      function handleKeyDown (e) {
+        console.log('fired');
+        if(e.ctrlKey && e.key === 'f'){
+        e.preventDefault();
+          if(mode !== 'search'){
+            setMode('search')
+          }
+        }
+      }
+  
   const listMode = mode === 'list';
 
   return (
     <TitleBar
-      first={<FontAwesomeIcon
-        icon={listMode ? faBars : faArrowLeft}
-        size='lg'
-        color='#009588'
-        className={styles['pointer']}
-        onClick={gotoListMode}
+        first={<FontAwesomeIcon
+         icon={listMode ? faBars : faArrowLeft}
+         size='lg'
+         color='#009588'
+         className={styles['pointer']}
+         onClick={gotoListMode}
       />}
       middle={
         <div className={styles['app-title']}>
           {listMode && "Fancy Messenger"}
-          {!listMode && <input
+          {!listMode && 
+           <input
             type='text'
             className={styles['search-text']}
             ref={input}
+            onChange={handleChange}
           />}
         </div>
       }

@@ -1,4 +1,5 @@
 import { ACTIONS } from './actionCreator'
+import React from 'react';
 export const INIT_STATE = {
   userId: '1',
   chatList: [
@@ -47,17 +48,26 @@ const ACTION_HANDLERS = {
 
 function handleChatSelected(state, payload) {
   const selectedChatIndex = state.chatList.findIndex(x => x.id === payload);
+  
+  const temp = [...state.chatList];
+  temp.splice(selectedChatIndex,1 , {
+    ...state.chatList[selectedChatIndex],
+    unreadMessageCount : 0
+  })
   return {
     ...state,
-    selectedChatId: payload,
-    chatList: [
-      ...state.chatList.slice(0, selectedChatIndex),
-      {
-        ...state.chatList[selectedChatIndex],
-        unreadMessageCount: 0
-      },
-      ...state.chatList.slice(selectedChatIndex + 1)
-    ]
+    selectedChatId : payload,
+    chatList : temp
+    // ...state,
+    // selectedChatId: payload,
+    // chatList: [
+    //   ...state.chatList.slice(0, selectedChatIndex),
+    //   {
+    //     ...state.chatList[selectedChatIndex],
+    //     unreadMessageCount: 0
+    //   },
+    //   ...state.chatList.slice(selectedChatIndex + 1)
+    // ]
   }
 }
 

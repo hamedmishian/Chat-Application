@@ -1,4 +1,4 @@
-import React, { useReducer, useMemo } from 'react'
+import React, { useReducer, useMemo, useState } from 'react'
 import AppStatus from './components/appStatus';
 import ListItem from './components/listItem';
 import List from './components/list';
@@ -8,8 +8,9 @@ import { INIT_STATE, reducer } from './stateManager/reducer';
 import { chatSelected, submitMessage, closeChat } from './stateManager/actionCreator';
 
 export default function Index() {
+  
   const [{ userId, chatList, messages, selectedChatId }, dispatch] = useReducer(reducer, INIT_STATE);
-
+  const [keyword, setKeyword] = useState('');
   const selectedChat = useMemo(
     () => chatList.find(x => x.id === selectedChatId),
     [chatList, selectedChatId]
@@ -29,12 +30,16 @@ export default function Index() {
     dispatch(closeChat());
   }
 
+  function onInputChange(keyword){
+    setKeyword(keyword);
+  }
   return (
     <div className={styles['layout']}>
       <div className={styles['side']}>
-        <AppStatus />
+        <AppStatus onInputChange={onInputChange}/>
         <List>
-          {chatList.map(chat => {
+          {chatList.filter(item => item.name.toLowerCase().includes(keyword.toLowerCase()))
+          .map(chat => {
             const lastMessage = messages.filter(x => x.chatId === chat.id);
             return <ListItem
               selected={chat.id === selectedChatId}
@@ -47,20 +52,10 @@ export default function Index() {
               text={lastMessage[lastMessage.length - 1].text}
             />
           })}
-          {/* <ListItem name='Maryam Habibi' avatar='/avatar-f.jpg' time='21:14' unreadMessageCount={65} text='Hi, This is a message' />
-          <ListItem name='Mina Mohammadi' avatar='/avatar-f.jpg' time='11:30' unreadMessageCount={15} text='Another Message' />
-          <ListItem name='Reza Ahmadi' avatar='/avatar.png' time='21:14' unreadMessageCount={65} text='Hi, This is a message' />
-          <ListItem name='Afshin Karimi' avatar='/avatar.png' time='11:30' unreadMessageCount={15} text='Another Message' selected />
-          <ListItem name='Mohammad Mardan Nia' avatar='/avatar.png' time='21:14' unreadMessageCount={65} text='Hi, This is a message' />
-          <ListItem name='Sarah Kiani' avatar='/avatar-f.jpg' time='11:30' unreadMessageCount={15} text='Another Message' />
-          <ListItem name='Minoo Mohammadian' avatar='/avatar-f.jpg' time='21:14' unreadMessageCount={65} text='Hi, This is a message' />
-          <ListItem name='Fereydoon Sabet' avatar='/avatar.png' time='11:30' unreadMessageCount={15} text='Another Message' />
-          <ListItem name='Zahra Gholami' avatar='/avatar-f.jpg' time='21:14' unreadMessageCount={65} text='Hi, This is a message' />
-          <ListItem name='Mohammad Bayat' avatar='/avatar.png' time='11:30' unreadMessageCount={15} text='Another Message' /> */}
         </List>
 
       </div>
-      <div className={styles['main']}>
+       <div className={styles['main']}>
         {selectedChatId &&
           <ChatDetail
             onClose={handleClose}
